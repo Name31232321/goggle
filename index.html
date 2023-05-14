@@ -68,9 +68,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column-reverse;
+        flex-direction: column;
        }
        .home_logo_image{
+        position: relative;
+        top: -10px;
         width: 50px;
         height: 50px;
         background-color: rgb(241 243 244);
@@ -80,13 +82,26 @@
         align-items: center;
        }
        .home_logo:hover{
-        background-color: lightgray;
-        border-radius: 5px;
-        cursor: pointer;
+            background-color: lightgray;
+            border-radius: 5px;
+            cursor: pointer;
        }
        .home_logo_text{
-        padding-top: 10px;
-        font-size: 13px;
+            position: relative;
+            top: -10px;
+            padding-top: 10px;
+            font-size: 13px;
+       }
+       svg{
+        position: relative;
+        left: 40px;
+        top: 5px;
+        opacity: 0;
+        z-index: 1;
+       }
+       .home_logo:hover svg{
+        transition: 2s;
+        opacity: 1;
        }
     </style>
 </head>
@@ -111,28 +126,32 @@
         </div>
         <div class="logo_container">
             <div class="home_logo">
-                <div class="home_logo_text">Home</div>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                 <div class="home_logo_image">
                     <img src="/image/1.png" width="30">
                 </div>
+                <div class="home_logo_text">Home</div>
            </div>
            <div class="home_logo">
-                <div class="home_logo_text">YouTube</div>
-                <div class="home_logo_image">
+               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+               <div class="home_logo_image">
                    <img src="/image/2.png" width="30">
                 </div>
+                <div class="home_logo_text">YouTube</div>
             </div>
             <div class="home_logo">
-                <div class="home_logo_text">롤 전적 검색 ...</div>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                 <div class="home_logo_image">
                     <img src="/image/3.png" width="30">
                 </div>
+                <div class="home_logo_text">롤 전적 검색 ...</div>
             </div>
             <div class="home_logo">
-                <div class="home_logo_text">(9) Twitch</div>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                 <div class="home_logo_image">
                     <img src="/image/4.png" width="30">
                 </div>
+                <div class="home_logo_text">(9) Twitch</div>
             </div>
        </div>
     </div>
