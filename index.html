@@ -106,6 +106,29 @@
     </style>
 </head>
 <body>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDUP9TeJ0HigSpa_EXl5NuQEuPn51tTIcQ",
+          authDomain: "fir-adc91.firebaseapp.com",
+          projectId: "fir-adc91",
+          storageBucket: "fir-adc91.appspot.com",
+          messagingSenderId: "252299915702",
+          appId: "1:252299915702:web:7496dbd307bb0d7c235117",
+          measurementId: "G-NVTG5MN6NS"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
     <div class="container">
         <span class="pad">Gmail</span>
         <span class="pad">이미지</span>
@@ -132,30 +155,56 @@
                 </div>
                 <div class="home_logo_text">Home</div>
            </div>
-           <div class="home_logo">
-               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-               <div class="home_logo_image">
-                   <img src="/image/2.png" width="30">
+            <div class="home_logo" id="plus">
+                
+                <div class="home_logo_image" style="margin-top:20px">
+                    <img src="/image/plus.png" width="30">
                 </div>
-                <div class="home_logo_text">YouTube</div>
-            </div>
-            <div class="home_logo">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                <div class="home_logo_image">
-                    <img src="/image/3.png" width="30">
-                </div>
-                <div class="home_logo_text">롤 전적 검색 ...</div>
-            </div>
-            <div class="home_logo">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                <div class="home_logo_image">
-                    <img src="/image/4.png" width="30">
-                </div>
-                <div class="home_logo_text">(9) Twitch</div>
+                <div class="home_logo_text">바로가기 추가</div>
             </div>
        </div>
     </div>
-</div>
-    </div>
+    <script>
+        document.getElementById("plus").addEventListener('click', add);
+
+        function add() {
+        var name = prompt("이름");
+        var url = prompt("URL");
+
+        var logo_container = document.querySelector('.logo_container');
+        var addButton = document.getElementById("plus");
+
+        var div = document.createElement('div');
+        div.className = "home_logo";
+
+        // Extract the root domain from the provided URL
+        var domain = getRootDomain(url);
+
+        div.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            <div class="home_logo_image">
+            <img src="https://${domain}/favicon.ico" width="40" onerror="this.style.display='none'">
+            </div>
+            <div class="home_logo_text">${name}</div>`;
+
+        div.onclick = function() {
+            window.location.href = url;
+        };
+
+        logo_container.insertBefore(div, addButton);
+        }
+
+        function getRootDomain(url) {
+        var domain = url;
+        // Remove the protocol (http://, https://) from the URL
+        domain = domain.replace(/(^\w+:|^)\/\//, '');
+        // Remove everything after the first slash ("/")
+        domain = domain.split('/')[0];
+        // Remove any subdomains (e.g., www.)
+        domain = domain.split('.').slice(-2).join('.');
+        return domain;
+        }
+
+    </script>
 </body>
 </html>
