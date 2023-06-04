@@ -103,32 +103,13 @@
         transition: 2s;
         opacity: 1;
        }
+       body{
+        overflow-y: hidden;
+       }
     </style>
 </head>
 <body>
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyDUP9TeJ0HigSpa_EXl5NuQEuPn51tTIcQ",
-          authDomain: "fir-adc91.firebaseapp.com",
-          projectId: "fir-adc91",
-          storageBucket: "fir-adc91.appspot.com",
-          messagingSenderId: "252299915702",
-          appId: "1:252299915702:web:7496dbd307bb0d7c235117",
-          measurementId: "G-NVTG5MN6NS"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
+
     <div class="container">
         <span class="pad">Gmail</span>
         <span class="pad">이미지</span>
@@ -164,10 +145,12 @@
             </div>
        </div>
     </div>
-    <script>
-        document.getElementById("plus").addEventListener('click', add);
+<!-- Add event listener to the plus button -->
+<!-- Add event listener to the plus button -->
+<script>
+    document.getElementById("plus").addEventListener('click', add);
 
-        function add() {
+    function add() {
         var name = prompt("이름");
         var url = prompt("URL");
 
@@ -183,7 +166,7 @@
         div.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             <div class="home_logo_image">
-            <img src="https://${domain}/favicon.ico" width="40" onerror="this.style.display='none'">
+                <img src="https://${domain}/favicon.ico" width="40" onerror="this.style.display='none'">
             </div>
             <div class="home_logo_text">${name}</div>`;
 
@@ -192,9 +175,24 @@
         };
 
         logo_container.insertBefore(div, addButton);
-        }
 
-        function getRootDomain(url) {
+        // Save the shortcut to local storage
+        var shortcuts = localStorage.getItem('shortcuts');
+        if (shortcuts) {
+            shortcuts = JSON.parse(shortcuts);
+        } else {
+            shortcuts = [];
+        }
+        var shortcut = {
+            name: name,
+            url: url,
+            domain: domain
+        };
+        shortcuts.push(shortcut);
+        localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+    }
+
+    function getRootDomain(url) {
         var domain = url;
         // Remove the protocol (http://, https://) from the URL
         domain = domain.replace(/(^\w+:|^)\/\//, '');
@@ -203,8 +201,34 @@
         // Remove any subdomains (e.g., www.)
         domain = domain.split('.').slice(-2).join('.');
         return domain;
-        }
+    }
+</script>
 
-    </script>
+<!-- Populate the shortcuts from local storage -->
+<script>
+    var shortcuts = localStorage.getItem('shortcuts');
+    if (shortcuts) {
+        shortcuts = JSON.parse(shortcuts);
+
+        var logo_container = document.querySelector('.logo_container');
+        var addButton = document.getElementById("plus");
+
+        for (var i = 0; i < shortcuts.length; i++) {
+            var shortcut = shortcuts[i];
+            var div = document.createElement('div');
+            div.className = "home_logo";
+            div.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                <div class="home_logo_image">
+                    <img src="https://${shortcut.domain}/favicon.ico" width="40" onerror="this.style.display='none'">
+                </div>
+                <div class="home_logo_text">${shortcut.name}</div>`;
+            div.onclick = function() {
+                window.location.href = shortcut.url;
+            };
+            logo_container.insertBefore(div, addButton);
+        }
+    }
+</script>
 </body>
 </html>
